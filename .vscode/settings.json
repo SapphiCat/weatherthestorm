@@ -1,0 +1,7 @@
+{
+  "dotnet.defaultSolution": "weatherthestorm.sln",
+  "files.associations": {
+    "server-*.txt": "log",
+    "client-*.txt": "log"
+  }
+}
