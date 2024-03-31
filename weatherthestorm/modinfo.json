@@ -4,10 +4,10 @@
     "name": "Weather the Storm",
     "authors": ["Kit & Macy"],
     "description": "Storms are meant to be weathered, not fought.",
-    "version": "0.1.3",
+    "version": "1.0.0",
     "side": "Universal",
     "requiredOnClient": false,
     "dependencies": {
-        "game": "1.19.0"
+        "game": "1.19.5"
     }
 }

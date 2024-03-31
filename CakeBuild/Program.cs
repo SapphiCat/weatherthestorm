@@ -99,15 +99,19 @@ public sealed class PackageTask : FrostingTask<BuildContext>
         context.CleanDirectory("../Releases");
         context.EnsureDirectoryExists($"../Releases/{context.Name}");
         context.CopyFiles($"../{BuildContext.ProjectName}/bin/{context.BuildConfiguration}/Mods/mod/publish/*", $"../Releases/{context.Name}");
-        if (context.DirectoryExists($"../{BuildContext.ProjectName}/assets"))
+
+        string[] resourcedirs = {"assets"};
+        foreach (string dir in resourcedirs) if (context.DirectoryExists($"../{BuildContext.ProjectName}/"+dir))
         {
-            context.CopyDirectory($"../{BuildContext.ProjectName}/assets", $"../Releases/{context.Name}/assets");
+            context.CopyDirectory($"../{BuildContext.ProjectName}/"+dir, $"../Releases/{context.Name}/"+dir);
         }
-        context.CopyFile($"../{BuildContext.ProjectName}/modinfo.json", $"../Releases/{context.Name}/modinfo.json");
-        if (context.FileExists($"../{BuildContext.ProjectName}/modicon.png"))
+
+        string[] resourcesingles = {"modinfo.json", "modicon.png"};
+        foreach (string single in resourcesingles) if (context.FileExists($"../{BuildContext.ProjectName}/"+single))
         {
-            context.CopyFile($"../{BuildContext.ProjectName}/modicon.png", $"../Releases/{context.Name}/modicon.png");
+            context.CopyFile($"../{BuildContext.ProjectName}/"+single, $"../Releases/{context.Name}/"+single);
         }
+
         context.Zip($"../Releases/{context.Name}", $"../Releases/{context.Name}_{context.Version}.zip");
     }
 }

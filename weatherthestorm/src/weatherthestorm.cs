@@ -5,7 +5,6 @@ using System.IO;
 using System.Collections.Generic;
 using Vintagestory.API.MathTools;
 using System.Reflection.Emit;
-using System.Text.Json.Serialization;
 using System;
 
 namespace weatherthestorm;
@@ -69,25 +68,26 @@ public class WeatherTheStorm : ModSystem
             if (player == null) return true;
 
 
-            return  (WeatherTheStormConfig.Loaded.OverrideDefaultLight && blockAccessor.GetLightLevel(pos.AsBlockPos, EnumLightLevelType.OnlyBlockLight) > WeatherTheStormConfig.Loaded.MaxStormDrifterSpawnLight) ||
-                    (WeatherTheStormConfig.Loaded.OverrideDefaultDistance && (double)player.Entity.Pos.DistanceTo(pos) < (double)WeatherTheStormConfig.Loaded.MinStormDrifterSpawnDistance) ||
+            return  (WeatherTheStormConfig.Loaded.AddLightCheck && blockAccessor.GetLightLevel(pos.AsBlockPos, EnumLightLevelType.OnlyBlockLight) > WeatherTheStormConfig.Loaded.MaxStormDrifterSpawnLight) ||
+                    (WeatherTheStormConfig.Loaded.AddDistanceCheck && (double)player.Entity.Pos.DistanceTo(pos) < (double)WeatherTheStormConfig.Loaded.MinStormDrifterSpawnDistance) ||
                     testy.IsColliding(blockAccessor, entityBoxRel, pos, alsoCheckTouch);
         }
     }
 
+
     public class WeatherTheStormConfig {
-        public static WeatherTheStormConfig Loaded = new();
-        public bool OverrideDefaultLight = true;
+        [Newtonsoft.Json.JsonIgnore] public static WeatherTheStormConfig Loaded = new();
+        public bool AddLightCheck = true;
         public int MaxStormDrifterSpawnLight = 7;
-        public bool OverrideDefaultDistance = true;
+        public bool AddDistanceCheck = true;
         public double MinStormDrifterSpawnDistance = 12;
 
-        [JsonIgnore] public sbyte MaxStormDrifterSpawnDistance;
+        [Newtonsoft.Json.JsonIgnore] public sbyte MaxStormDrifterSpawnDistance;
 
         public WeatherTheStormConfig() {
             // cubed root of 2; should guarantee at least a half of the area is spawnable.
             // accounting for ground and the min range being spherical though... anyone's guess.
-            MaxStormDrifterSpawnDistance = (sbyte) Math.Ceiling(MinStormDrifterSpawnDistance * 1.129);
+            this.MaxStormDrifterSpawnDistance = (sbyte) Math.Ceiling(MinStormDrifterSpawnDistance * 1.129);
         }
     }
 }
