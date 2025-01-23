@@ -2,12 +2,12 @@
     "type": "code",
     "modid": "weatherthestorm",
     "name": "Weather the Storm",
-    "authors": ["Kit & Macy"],
+    "authors": ["Kit&"],
     "description": "Storms are meant to be weathered, not fought.",
-    "version": "1.0.0",
+    "version": "1.1.0",
     "side": "Universal",
     "requiredOnClient": false,
     "dependencies": {
-        "game": "1.19.5"
+        "game": "1.20.0"
     }
 }

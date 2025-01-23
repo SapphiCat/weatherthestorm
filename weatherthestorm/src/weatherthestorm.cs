@@ -47,7 +47,7 @@ public class WeatherTheStorm : ModSystem
     }
 
     [HarmonyTranspiler]
-    [HarmonyPatch(typeof(SystemTemporalStability), "trySpawnDrifters")]
+    [HarmonyPatch(typeof(SystemTemporalStability), "trySpawnForPlayer")]
     public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator genny) {
         CodeMatcher cody = new CodeMatcher(instructions, genny)
         .Start().MatchStartForward(new CodeMatch(OpCodes.Ldc_I4_S));
